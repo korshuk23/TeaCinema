@@ -7,64 +7,44 @@ description = 'booking-service'
 dependencies {
     // 1. Наш общий модуль
     implementation project(':core')
-    // 2.  Grpc клиент
+
+    // 2. gRPC клиент (вызовы к Movie Service)
     implementation('net.devh:grpc-client-spring-boot-starter:3.1.0.RELEASE') {
         exclude group: 'io.grpc'
     }
-    // 3. Стандартный стек для REST-API и работы с БДя
+
+    // 3. Web & JPA
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     runtimeOnly 'org.postgresql:postgresql'
-
-    // 4. Зависимость для gRPC КЛИЕНТА (Букинг будет вызывать Муви)
-    implementation 'net.devh:grpc-client-spring-boot-starter:3.1.0.RELEASE'
-
-    // 5. Liquibase
     implementation 'org.liquibase:liquibase-core'
 
-    // 6. kafka
+    // 4. Kafka & Discovery
     implementation 'org.springframework.kafka:spring-kafka'
-
-    // 7. Eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-    // 8. Testcontainers для реальных интеграционных тестов
-    testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
-    testImplementation 'org.testcontainers:postgresql:1.20.4'
-    testImplementation 'org.testcontainers:kafka:1.20.4'
-    // 9. Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
+    // 5. In-Memory, Cache & SSE
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
 
-    // 10. Resilience4j
+    // 6. Security (Zero-Trust Resource Server)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    // 7. Resilience & Observability
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
-
-    // 11. Actuator для сбора метрик и здоровья
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    // 12. Prometheus для отдачи метрик (CPU, память, HTTP-запросы)
     implementation 'io.micrometer:micrometer-registry-prometheus'
-
-    // 13. OpenTelemetry для распределенной трассировки
     implementation 'io.micrometer:micrometer-tracing-bridge-otel'
     implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
 
-    // 14. Testcontainers для PostgreSQL
+    // 8. Тестирование с Testcontainers
     testImplementation 'org.testcontainers:junit-jupiter:1.20.6'
     testImplementation 'org.testcontainers:postgresql:1.20.6'
     testImplementation 'org.testcontainers:kafka:1.20.6'
-
-
-    // 15. Validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-    // 16. Caffeine
-    implementation 'com.github.ben-manes.caffeine:caffeine'
-
-    // 17. Redis pub/sub
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-
 }
 
 tasks.named('test') {

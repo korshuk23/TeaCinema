@@ -84,6 +84,7 @@ flowchart LR
 ```bash
 git clone https://github.com/korshuk23/booking-app.git
 cd booking-app
+cp .env.example .env
 ./gradlew clean build -x test
 ```
 
